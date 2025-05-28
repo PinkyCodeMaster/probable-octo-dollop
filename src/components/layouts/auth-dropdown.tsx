@@ -86,7 +86,7 @@ export function AuthDropdown({ user, className, ...props }: AuthDropdownProps) {
   )
 }
 
-async function AuthDropdownGroup() {
+function AuthDropdownGroup() {
 
   return (
     <DropdownMenuGroup>

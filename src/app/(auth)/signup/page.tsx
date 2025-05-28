@@ -22,6 +22,7 @@ export default function SignupPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [formData, setFormData] = useState({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -57,12 +58,43 @@ export default function SignupPage() {
       return
     }
 
+    if (formData.username.length < 3) {
+      setError("Username must be at least 3 characters long")
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.username.length > 20) {
+      setError("Username must be less than 20 characters long")
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.username.includes(" ")) {
+      setError("Username cannot contain spaces")
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.username.includes(".")) {
+      setError("Username cannot contain periods")
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.username.includes("@")) {
+      setError("Username cannot contain @")
+      setIsLoading(false)
+      return
+    }
+
     const name = `${formData.firstName} ${formData.lastName}`
 
     await authClient.signUp.email({
+      username: formData.username,
+      name: name,
       email: formData.email,
       password: formData.password,
-      name: name,
       callbackURL: "/dashboard"
     }, {
       onRequest: () => {
@@ -141,6 +173,22 @@ export default function SignupPage() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    id="username"
+                    name="username"
+                    placeholder="wolfpack"
+                    className="pl-10"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -303,6 +351,6 @@ export default function SignupPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </div >
   )
 }

@@ -14,8 +14,8 @@ import {
     Text,
 } from '@react-email/components';
 
-const VerifyEmail = (props: { customerName: string, verificationLink: string, expirationTime: string }) => {
-    const { customerName, verificationLink, expirationTime } = props;
+const VerifyEmail = (props: { customerName: string, customerUsername: string, verificationLink: string, expirationTime: string }) => {
+    const { customerName, customerUsername, verificationLink, expirationTime } = props;
 
     return (
         <Html>
@@ -41,7 +41,10 @@ const VerifyEmail = (props: { customerName: string, verificationLink: string, ex
                         {/* Main verification message */}
                         <Section className="mb-[24px] bg-[#D2B48C] p-[24px]">
                             <Text className="text-[16px] mb-[16px] text-[#0D0D0D] uppercase font-bold">
-                                OPERATOR: {customerName},
+                                OPERATOR: {customerUsername}
+                            </Text>
+                            <Text className="text-[16px] mb-[16px] text-[#0D0D0D]">
+                                NAME: {customerName}
                             </Text>
                             <Text className="text-[16px] mb-[16px] text-[#0D0D0D]">
                                 Your wolfpackdefence Marketplace account requires verification before tactical operations can commence.

@@ -148,9 +148,7 @@ export default function UserDashboard() {
     return <div>Error: {error.message}</div>
   }
 
-  if (!session) {
-    return <div>Not authenticated</div>
-  }
+  const initials = (session!.user.name.split(" ")[0].charAt(0) + session!.user.name.split(" ")[1].charAt(0)) || "TG"
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -160,12 +158,11 @@ export default function UserDashboard() {
           <Card>
             <CardHeader className="text-center">
               <Avatar className="w-20 h-20 mx-auto mb-4">
-                <AvatarImage src={session.user?.image || "/placeholder.svg?height=80&width=80"} />
-                <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
+                <AvatarImage src="/placeholder.svg?height=80&width=80" />
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
               <div className="flex items-center justify-center space-x-2">
-                <CardTitle>{session.user?.name}</CardTitle>
-                {/* TODO: Add verified badge */}
+                <CardTitle>{session?.user?.username}</CardTitle>
                 {userStats.verified && <Shield className="h-5 w-5 text-green-500" />}
               </div>
               <div className="flex items-center justify-center space-x-1">

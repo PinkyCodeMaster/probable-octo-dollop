@@ -24,6 +24,7 @@ interface WelcomeEmailProps {
 
 interface VerifyEmailProps {
     customerName: string;
+    customerUsername: string;
     verificationLink: string;
     expirationTime: string;
 }

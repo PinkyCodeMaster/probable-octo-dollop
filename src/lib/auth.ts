@@ -1,7 +1,8 @@
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { admin, username } from "better-auth/plugins";
+import { EmailTemplates, sendEmail } from "./resend";
 import { nextCookies } from "better-auth/next-js";
 import { betterAuth } from "better-auth";
-import { EmailTemplates, sendEmail } from "./resend";
 import { db } from "@/db";
 
 export const auth = betterAuth({
@@ -32,6 +33,8 @@ export const auth = betterAuth({
                 template: EmailTemplates.VERIFY_EMAIL,
                 data: {
                     customerName: user.name,
+                    // @ts-expect-error - username is not typed
+                    customerUsername: user.username,
                     verificationLink: url,
                     expirationTime: new Date(Date.now() + 1000 * 60 * 60 * 24).toLocaleString()
                 }
@@ -39,6 +42,14 @@ export const auth = betterAuth({
         }
     },
     plugins: [
-        nextCookies()
+        nextCookies(),
+        username({
+            minUsernameLength: 5,
+            maxUsernameLength: 20,
+        }),
+        admin({
+            adminUserIds: [],
+            defaultBanExpiresIn: 60 * 60 * 24,
+        })
     ]
 });

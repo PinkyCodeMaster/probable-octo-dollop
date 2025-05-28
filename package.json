@@ -11,7 +11,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "auth:generate": "pnpx @better-auth/cli generate --config ./src/lib/auth.ts --output ./src/db/schema/auth.ts"
+    "auth:generate": "pnpx @better-auth/cli generate --config ./src/lib/auth.ts --output ./src/db/schema/auth.ts",
+    "db:auth": "pnpm run auth:generate && pnpm run db:generate && pnpm run db:migrate && pnpm run db:push",
+    "db:update": "pnpm run db:generate && pnpm run db:migrate && pnpm run db:push && pnpm run db:studio"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
